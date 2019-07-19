@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="map_name" default="simple_map"/>
+ <!-- Run the map server --> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find taurob_mapping)/maps/$(arg map_name).yaml"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
+ <!--- Run AMCL  
+    <include file="$(find taurob_tracker_navigation)/launch/amcl.launch" /> -->
+  <node name="taurob_amcl" pkg="amcl" type="amcl">
+    <remap from="scan" to="taurob_tracker/laser_scan"/>
+    <param name="odom_model_type" value="diff-corrected"/> <!-- To get new version -->
+
+    <param name="odom_frame_id" value="odom"/>
+    <param name="base_frame_id" value="base_link"/>
+    <param name="update_min_d" value="0.5"/>
+    <param name="update_min_a" value="1.0"/>
+  </node>
+
+  <include file="$(find taurob_mapping)/launch/move_base_old.launch">
+    <arg name="cmd_vel_topic" value="cmd_vel_default" />
+  </include>
+
+  <!-- Read navigation goals from user and publish to topic -->
+  <node pkg="tb3_navigation_goal" type="read_user_input.py" name="read_user_input" output="screen"/>
+
+  <!-- Read navigation goals from topic and set to move_base -->
+  <node name="send_nav_goal" pkg="taurob_mapping" type="set_goal_from_topic.py" output="screen"/>
+
+  <node name="control_vel_writing" pkg="taurob_mapping" type="control_writing_vel.py" output="screen" />
+
+  <node name="recovery" pkg="taurob_mapping" type="recovery_vel.py" />
+
+
+</launch> 

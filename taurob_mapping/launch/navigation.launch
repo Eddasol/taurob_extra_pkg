@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- File to bringup taurob in gazebo world and start navigation. Navigation is currently very bad and need configuration -->
+
+<launch>
+  <!-- Run the map server to fetch map --> 
+  <arg name="map_name" default="simple_map"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find taurob_mapping)/maps/$(arg map_name).yaml"/>
+  
+  <!-- Set initial position in map ?--> 
+  <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
+  
+  <!--- Run AMCL  (Localization on the map) -->
+  <node name="taurob_amcl" pkg="amcl" type="amcl">
+    <remap from="scan" to="taurob_tracker/laser_scan"/>
+    <param name="odom_model_type" value="diff-corrected"/> <!-- To get new version -->
+
+    <param name="odom_frame_id" value="odom"/>
+    <param name="base_frame_id" value="base_link"/>
+    <param name="update_min_d" value="0.5"/>
+    <param name="update_min_a" value="1.0"/>
+  </node>
+
+  <!-- Run move_base (Autonomous movement to given goal) -->
+  <include file="$(find taurob_mapping)/launch/move_base_turtle.launch" >
+      <arg name="cmd_vel_topic" value="taurob_tracker/cmd_vel_raw" />
+  </include>
+
+  <!-- Run gazebo and bringup taurob in given world -->
+  <arg name="world_name" default="simple_world" />
+  <include file="$(find taurob_alternative_worlds)/launch/bringup_$(arg world_name).launch" />
+
+</launch> 

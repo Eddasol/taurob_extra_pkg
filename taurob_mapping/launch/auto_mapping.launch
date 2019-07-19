@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- SLAM: Gmapping-->
+  <node pkg="gmapping" type="slam_gmapping" name="taurob_slam_gmapping" output="screen" >
+    <remap from="scan" to="taurob_tracker/laser_scan" />
+  </node>
+
+  <!-- AMCL -->
+  <include file="$(find taurob_mapping)/launch/amcl.launch"/>
+
+  <!-- move_base -->
+  <include file="$(find taurob_mapping)/launch/move_base_old.launch" />
+
+  <!-- Explore -->
+  <include file="$(find explore_lite)/launch/explore.launch" />
+
+</launch>
