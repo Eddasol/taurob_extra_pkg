@@ -1,6 +1,6 @@
 <launch>
   <!-- Collects mapname. Takes in the "core filename" without path or filetype -->
-  <arg name="map_name" default="cone_barrier_map"/>
+  <arg name="map_name" default="new_map"/>
   <!-- Map node. Publishes the given map on /map topic-->
   <node name="taurob_map_node" pkg="map_server" type="map_server" args="$(find taurob_tracker_slam)/maps/$(arg map_name).yaml" />
 
@@ -8,6 +8,5 @@
   <node name="taurob_amcl" pkg="amcl" type="amcl">
     <remap from="scan" to="taurob_tracker/laser_scan"/>
     <param name="odom_model_type" value="diff-corrected"/> <!-- To get new version -->
-
   </node>
 </launch>
