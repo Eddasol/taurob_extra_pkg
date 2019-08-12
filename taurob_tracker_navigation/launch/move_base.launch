@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-
   <!-- Move base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find taurob_tracker_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
@@ -8,13 +7,10 @@
     <rosparam file="$(find taurob_tracker_navigation)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find taurob_tracker_navigation)/config/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find taurob_tracker_navigation)/config/base_local_planner_params.yaml" command="load" />
-
     <remap from="cmd_vel" to="taurob_tracker/cmd_vel_raw"/>
     <remap from="odom" to="odom"/>
     <remap from="scan" to="taurob_tracker/laser_scan"/>
     <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
     <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/>
   </node>
-
-
 </launch>
