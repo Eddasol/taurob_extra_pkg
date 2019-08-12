@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+
+'''
+Controlscript that makes it possible to override a node that desires to control velocity. It forwards the 
+desired velocity of the topic that is given control.
+'''
 import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String
