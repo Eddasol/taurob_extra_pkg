@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-
+'''
+Example of controlscript that desides which topic that controls the velocity
+'''
 
 # This file will only shutdown if it has a goal position
 import roslib
