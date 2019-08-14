@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Map saver node -->
+  <node name="taurob_save_map_node" pkg="map_server" type="map_saver" args="-f my_map" />
+</launch>
+
+<!-- Doesn't work. Run "rosrun map_server map_saver -f map_name" instead-->

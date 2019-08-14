@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
+<!-- Brings up the robot without a world. Useful if the world is already spawned  -->
 <launch>
-
   <arg name="laser_offset_rot" default="0.0" />
+  <arg name="taurob_name" default="taurob_tracker" /> <!-- Need different names to spawn more than one -->
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description"
@@ -9,6 +10,6 @@
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-    args="-urdf -model taurob_tracker -param robot_description"/>
+    args="-urdf -model $(arg taurob_name) -param robot_description"/>
 
 </launch>

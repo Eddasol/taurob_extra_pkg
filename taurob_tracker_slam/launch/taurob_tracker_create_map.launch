@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <!-- Gmapping node. Scans the environment to create a map -->
-  <node name="taurob_gmapping" pkg="gmapping" type="slam_gmapping">
-    <remap from="scan" to="taurob_tracker/laser_scan"/>
-  </node>
-</launch>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- SLAM: Gmapping-->
+  <node pkg="gmapping" type="slam_gmapping" name="taurob_slam_gmapping" output="screen" >
+    <remap from="scan" to="taurob_tracker/laser_scan" />
+  </node>
+</launch>

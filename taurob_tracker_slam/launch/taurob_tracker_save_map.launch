@@ -1,8 +1,0 @@
-<launch>
-  <!-- Map saver node -->
-  <arg name="map_name" default="temp_map_name" />
-  <arg name="mode" default="-f" />
-  <node name="taurob_save_map_node" pkg="map_server" type="map_saver" args="-f my_map" />
-</launch>
-
-<!-- Doesn't work. Run "rosrun map_server map_saver -f map_name" instead-->
